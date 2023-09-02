@@ -1,0 +1,22 @@
+{
+  "name": "untek-framework/web-test",
+  "type": "extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Zn Developer",
+      "email": "zndev@ya.ru"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "symfony/browser-kit": "^4.4|^5.4|^6.0",
+    "untek-component/encoder": "0.1.x-dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Untek\\Framework\\\\": "src",
+      "Untek\\Framework\\\\Tests\\": "tests"
+    }
+  }
+}
