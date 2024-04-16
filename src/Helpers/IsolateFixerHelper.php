@@ -18,6 +18,7 @@ class IsolateFixerHelper
      */
     public static function fixBeforeHandle(Request $request): void
     {
+        ob_start();
         $clientSessId = $request->cookies->get('PHPSESSID');
         if ($clientSessId) {
             session_id($clientSessId);
@@ -33,11 +34,20 @@ class IsolateFixerHelper
      * @param Request $request
      * @param Response $response
      */
-    public static function fixAfterHandle(Request $request, Response $response): void
+    public static function fixAfterHandle(Request $request, Response $response): Response
     {
         $clientSessId = $request->cookies->get('PHPSESSID');
         if (session_id() != $clientSessId) {
             $response->headers->set('Set-Cookie', "PHPSESSID=" . session_id() . "; path=/");
         }
+
+        $buffer = ob_get_contents();
+        $buffer = trim($buffer);
+        ob_end_clean();
+        if(!empty($buffer)) {
+            $response = new Response($buffer, 500);
+        }
+
+        return $response;
     }
 }
