@@ -13,8 +13,9 @@ class BrowserImitationRequest
 
     protected string $baseUrl = 'http://localhost';
 
-    public function __construct(string $endpointScript)
+    public function __construct(string $endpointScript, ?string $baseUrl = 'http://localhost')
     {
+        $this->baseUrl = $baseUrl;
         $this->browser = $this->createBrowser($endpointScript);
     }
 
